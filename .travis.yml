@@ -9,5 +9,4 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
-  
-local-dir: dist
+  local-dir: dist
