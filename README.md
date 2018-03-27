@@ -1,4 +1,6 @@
-# vue-awvs-simulation
+# vue-awvs-simulation 
+
+[![Build Status](https://travis-ci.org/karleule/vue-awvs-simulation.svg?branch=master)](https://travis-ci.org/karleule/vue-awvs-simulation)
 
 > A Vue.js project
 
