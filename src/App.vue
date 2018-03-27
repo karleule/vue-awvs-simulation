@@ -34,32 +34,32 @@
       items:[
         {
           id: 1,
-          shape: 'triangle',
+          shape: 'circle',
           color: 'green'
         },
         {
           id: 2,
-          shape: 'triangle',
-          color: 'green'
+          shape: 'circle',
+          color: 'red'
         },
         {
           id: 3,
-          shape: 'triangle',
-          color: 'green'
+          shape: 'circle',
+          color: 'yellow'
         },
         {
           id: 4,
-          shape: 'triangle',
-          color: 'green'
+          shape: 'square',
+          color: 'red'
         },
         {
           id: 5,
-          shape: 'triangle',
-          color: 'green'
+          shape: 'square',
+          color: 'yellow'
         },
         {
           id: 6,
-          shape: 'triangle',
+          shape: 'square',
           color: 'green'
         },
         {
