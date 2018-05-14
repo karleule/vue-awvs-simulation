@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import VueDragDrop from 'vue-drag-drop';
 
 Vue.use(Vuetify)
+Vue.use(VueDragDrop);
 
 Vue.config.productionTip = false
 

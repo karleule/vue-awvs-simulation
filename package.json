@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
+    "vue-drag-drop": "^1.0.0",
+    "vue-smooth-dnd": "^0.1.5",
     "vuetify": "^1.0.0"
   },
   "devDependencies": {
