@@ -1,24 +1,27 @@
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" :width='size' :height='size'>
-    <path d="M 50,5 95,97.5 5,97.5 z"/>
-  </svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="48" height="48" :style="style">
+  <polygon :style="style" points="0,48 24,0 48,48"/>
+</svg>
 </template>
-
-<style>
-  /* .svg-triangle {
-  /*   border: 1px solid gray;
-  } */
-
-  .svg-triangle path {
-    stroke-width: 5;
-    stroke: black;
-  }
-</style>
-
 
 <script>
 export default {
-  props: ['size']
+  props: ['size', 'outline', 'color'],
+  computed: {
+    style () {
+      if(this.outline === null || this.outline === undefined) {
+        return {
+          fill: this.color
+        }
+      } else {
+        return {
+          fill: 'transparent',
+          stroke: this.color,
+          strokeWidth: 2
+        }
+      }
+    }
+  }
 }
 </script>
 

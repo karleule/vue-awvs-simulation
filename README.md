@@ -20,6 +20,8 @@ npm run build
 npm run build --report
 ```
 
+Demo - https://karleule.github.io/vue-awvs-simulation/
+
 http://www.pbs.org/wgbh/misunderstoodminds/experiences/attexp2b.html
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
