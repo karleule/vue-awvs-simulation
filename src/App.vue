@@ -2,31 +2,65 @@
   <v-app id="inspire">
     <v-content>
       <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <div class="pa-3" style="border: 1px solid lightgrey;">
-            <v-container grid-list-xs>
-              <v-layout row wrap justify-space-around>
-                <v-flex xs3 v-for="(item, index) in startItems" :key="index">
-                  <drag v-if="item.payload !== null" :transfer-data="item.payload" style="height:64px; width:64px; border: 1px solid lightgrey;">
-                    <shape-card :color="item.payload.color" :shape="item.payload.shape"></shape-card>               
-                  </drag>
-                  <div v-else style="height:64px; width:64px; border: 1px solid lightgrey;">
-                  </div>
-              </v-flex>
-              </v-layout>
-            </v-container>
-          </div>
-          <div class="pa-3" style="border: 1px solid lightgrey;">
-            <v-container grid-list-xs>
-              <v-layout row wrap>
-                <v-flex xs4 v-for="(item, index) in goalItems" :key="index">
-                  <drop @drop="handleDrop(index, ...arguments)" style="height:64px; width:64px; border: 1px solid lightgrey;">
-                    <shape-card :color="item.color" :shape="item.shape" :outline="item.outline"></shape-card>  
-                  </drop>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </div>
+        <v-layout justify-center align-center column>
+          <v-card>
+            <v-card-text>            
+              <v-layout>
+                <div class="pa-3" style="border: 1px solid lightgrey;" >
+                  <v-container grid-list-xs>
+                    <v-layout row wrap style="max-height: 192px; max-width:256px;"> 
+                     <v-flex xs3 v-for="(item,index) in startItems" :key="item.id">    
+                       <template v-if="!solved">
+                          <drag v-if="item.data !== null" :transfer-data="item.data" style="height:64px; width:64px; border: 1px solid lightgrey;">
+                            <shape-card :color="item.data.color" :shape="item.data.shape"></shape-card>
+                          </drag>
+                          <drop v-else @drop="handleStartDrop(index, ...arguments)"  style="height:64px; width:64px; border: 1px solid lightgrey;">
+                            {{item.data}}
+                          </drop>
+                       </template>    
+                       <template v-else>
+                         <div style="height:64px; width:64px; border: 1px solid lightgrey;">
+                         </div>
+                       </template>            
+                    </v-flex>
+                    </v-layout>
+                  </v-container>
+                </div>
+                <div class="pa-3" style="border: 1px solid lightgrey;">
+                  <v-container grid-list-xs>
+                    <v-layout row wrap style="max-height: 192px; max-width:192px;">
+                      <v-flex xs4 v-for="(item, index) in goalItems" :key="item.id">
+                        <template v-if="!solved">
+                          <drop v-if="item.data === null" @drop="handleGoalDrop(index, ...arguments)"  style="height:64px; width:64px; border: 1px solid lightgrey;">
+                            <shape-card :color="item.style.color" :shape="item.style.shape" outline></shape-card>
+                          </drop>
+                          <drag v-else :transfer-data="item.data" style="height:64px; width:64px; border: 1px solid lightgrey;">
+                            <shape-card :color="item.data.color" :shape="item.data.shape"></shape-card>
+                          </drag>
+                       </template>    
+                       <template v-else>
+                         <div style="height:64px; width:64px; border: 1px solid lightgrey;">
+                          <v-icon color="success" v-if="isCorrect(index)" x-large>
+                            check
+                          </v-icon>
+                          <v-icon v-else color="error" x-large>
+                            close
+                          </v-icon>
+                         </div>
+                       </template>  
+                      </v-flex>
+                    </v-layout>
+                  </v-container>
+                </div>
+            </v-layout>
+            </v-card-text>
+            <v-card-actions class="pr-3">
+              <v-spacer></v-spacer>
+              <v-btn @click.stop="solve" color="primary">
+                Solve
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </v-layout>
       </v-container>
     </v-content>
@@ -35,6 +69,9 @@
 
 <script>
 import ShapeCard from '@/components/ShapeCard'
+import findIndex from 'lodash/findIndex'
+import cloneDeep from 'lodash/cloneDeep'
+import isNil from 'lodash/isNil'
 
 export default {
   components: {
@@ -43,137 +80,177 @@ export default {
   data: () => ({
     title: 'awvs',
     drawer: null,
+    solved: false,
     startItems: [
       {
-        payload: {
+        id: 0,
+        data: {
           color: 'red',
           shape: 'square',
-          index: 0
-        }
+          goal: -1
+        }  
       },
-      {
-        payload: {
+      { 
+        id: 1,
+        data: {
           color: 'green',
           shape: 'circle',
-          index: 1
+          goal: 1
         }
       },
       {
-        payload: {
+        id: 2,
+        data: {
           color: '#e6e600',
           shape: 'circle',
-          index: 2
+          goal: 2
         }
       },
       {
-        payload: {
+        id: 3,
+        data: {
           color: 'red',
           shape: 'triangle',
-          index: 3
+          goal: 4
         }
       },
       {
-        payload: {
+        id: 4,
+        data: {
           color: 'blue',
           shape: 'circle',
-          index: 4
+          goal: -1
         }
       },
       {
-        payload: {
+        id: 5,
+        data: {
           color: 'green',
           shape: 'square',
-          index: 5
+          goal: 5
         }
       },
       {
-        payload: {
+        id: 6,
+        data: {
           color: 'red',
           shape: 'circle',
-          index: 6
+          goal: 3
         }
       },
       {
-        payload: {
+        id: 7,
+        data: {
           color: 'blue',
           shape: 'square',
-          index: 7
+          goal: 6
         }
       },
       {
-        payload: {
+        id: 8,
+        data: {
           color: 'blue',
           shape: 'triangle',
-          index: 8
+          goal: 8
         }
       },
       {
-        payload: {
+        id: 9,
+        data: {
           color: 'green',
           shape: 'triangle',
-          index: 9
+          goal: 0
         }
       },
       {
-        payload: {
+        id: 10,
+        data: {
           color: '#e6e600',
           shape: 'triangle',
-          index: 10
+          goal: 7
         }
       },
       {
-        payload: {
+        id: 11,
+        data: {
           color: '#e6e600',
           shape: 'square',
-          index: 11
+          goal: -1
         }
       }
     ], 
     goalItems: [
       {
-        color: 'red',
-        shape: 'circle',
-        outline : true
+        id: 12,
+        data: null,
+        style: {
+          color: 'red',
+          shape: 'circle'
+        }
       },
       {
-        color: 'blue',
-        shape: 'triangle',
-        outline : true
+        id: 13,
+        data: null,
+        style: {
+          color: 'blue',
+          shape: 'triangle'
+        }
       },
       {
-        color: 'blue',
-        shape: 'square',
-        outline : true
+        id: 14,
+        data: null,
+        style: {
+          color: 'blue',
+          shape: 'square'
+        }
       },
       {
-        color: 'green',
-        shape: 'square',
-        outline : true
+        id: 15,
+        data: null,
+        style: {
+          color: 'green',
+          shape: 'square'
+        }
       },
       {
-        color: '#e6e600',
-        shape: 'triangle',
-        outline : true
+        id: 16,
+        data: null,
+        style: {
+          color: '#e6e600',
+          shape: 'triangle'
+        }
       },
       {
-        color: 'red',
-        shape: 'square',
-        outline : true
+        id: 17,
+        data: null,
+        style: {
+          color: 'red',
+          shape: 'square'
+        }
       },
       {
-        color: 'red',
-        shape: 'triangle',
-        outline : true
+        id: 18,
+        data: null,
+        style: {
+          color: 'red',
+          shape: 'triangle'
+        }
       },
       {
-        color: '#e6e600',
-        shape: 'circle',
-        outline : true
+        id: 19,
+        data: null,
+        style: {
+          color: '#e6e600',
+          shape: 'circle'
+        }
       },
       {
-        color: 'green',
-        shape: 'circle',
-        outline : true
+        id: 20,
+        data: null,
+        style: {
+          color: 'green',
+          shape: 'circle'
+        }
       }
     ], 
     startOptions: {
@@ -191,11 +268,52 @@ export default {
     }
   }),
   methods: {
-    handleDrop(index, data) {
-      this.goalItems[index].shape = data.shape
-      this.goalItems[index].color = data.color
-      this.goalItems[index].outline = undefined
-      this.startItems[data.index].payload = null
+    handleGoalDrop(index, data) {
+      let deleteIndex = findIndex(this.startItems, (item) => {
+        return item.data === data
+      })
+      let isStart = deleteIndex > -1
+      if (isStart) {
+        this.goalItems[index].data = data
+        this.startItems[deleteIndex].data = null
+      } else {
+        deleteIndex = findIndex(this.goalItems, (item) => {
+          return item.data === data
+        })
+        this.goalItems[index].data = data
+        this.goalItems[deleteIndex].data = null
+      }
+    },
+    handleStartDrop(index, data) {
+      let deleteIndex = findIndex(this.goalItems, (item) => {
+        return item.data === data
+      })
+      let isGoal = deleteIndex > -1
+      if (isGoal) {
+        this.startItems[index].data = data
+        this.goalItems[deleteIndex].data = null
+      } else {
+        deleteIndex = findIndex(this.startItems, (item) => {
+          return item.data === data
+        })
+        this.startItems[index].data = data
+        this.startItems[deleteIndex].data = null
+      }
+    },
+    solve() {
+      this.solved = true
+    },
+    isCorrect (index) {
+      let data = this.goalItems[index].data
+      if (isNil(data)) {
+        return false
+      } else {
+        if (data.goal === index) {
+          return true
+        } else {
+          return false
+        }
+      }
     }
   }
 }
