@@ -13,7 +13,7 @@
         </div>
       </v-card-text>
     <v-card-actions>
-      <v-btn color="primary" @click="$emit('start')">
+      <v-btn style="background: #5A2572; color: white;" @click="$emit('start')">
         Start
       </v-btn>
     </v-card-actions>
