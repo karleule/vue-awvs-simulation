@@ -65,10 +65,14 @@ import ShapeCard from './components/ShapeCard'
 import findIndex from 'lodash/findIndex'
 import cloneDeep from 'lodash/cloneDeep'
 import isNil from 'lodash/isNil'
+import { Drag, Drop} from 'vue-drag-drop'
+
 
 export default {
     components: {
-    ShapeCard
+    ShapeCard,
+    Drag,
+    Drop
   },
   data: () => ({
     title: 'awvs',
