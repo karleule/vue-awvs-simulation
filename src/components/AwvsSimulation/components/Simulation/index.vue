@@ -50,8 +50,11 @@
     </v-card-text>
     <v-card-actions class="pr-3">
       <v-spacer></v-spacer>
-      <v-btn :disabled="!introSoundEnded" @click.stop="solve" style="background: #5A2572; color: white;">
+      <v-btn v-if="!solved" :disabled="!introSoundEnded" @click.stop="solve" style="background: #5A2572; color: white;">
         Aufdecken
+      </v-btn>
+      <v-btn v-else :disabled="!introSoundEnded" color="success">
+        Fertig
       </v-btn>
     </v-card-actions>
   </v-card>
