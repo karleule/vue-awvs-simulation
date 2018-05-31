@@ -18,7 +18,7 @@
 </style>
 
 <script>
-import Triangle from '../components/Triangle.vue'
+import Triangle from './components/Triangle.vue'
 
 export default {
   props: ['shape', 'color', 'id', 'outline'],
