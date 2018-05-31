@@ -12,6 +12,7 @@
 <script>
 import Simulation from './components/Simulation'
 import Hello from './components/Hello'
+
 export default {
   components: {
     Simulation,

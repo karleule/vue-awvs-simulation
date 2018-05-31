@@ -306,6 +306,10 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    var audio = new Audio('./static/BBW_AVWS_SOUND_BROWSERGAME_FINAL_320kb.mp3');
+    audio.play();
   }
 }
 </script>
