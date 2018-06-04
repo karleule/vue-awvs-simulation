@@ -8,7 +8,7 @@
           Danach hören Sie eine Lehrerin, die ihrer Klasse Anweisungen gibt.
           Bitte folgen auch Sie diesen Anweisungen.
           Die Anweisungen dauern fast zwei Minuten.
-          Danach können sie auf den unten rechts erscheinenden Button ("Karten umdrehen") klicken.
+          Danach können sie auf den unten rechts erscheinenden Button ("Aufdecken") klicken.
           Vergleichen Sie zum Schluss Ihr Ergebnis
         </div>
       </v-card-text>

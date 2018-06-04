@@ -1,11 +1,7 @@
 <template>
   <div style="width: 552px; height:312px;">
-    <transition v-if="started" enter-active-class="animated fadeIn">
-      <simulation ></simulation>          
-    </transition>  
-    <transition v-else leave-active-class="animated fadeOut">
-      <hello @start="started = true"></hello>
-    </transition> 
+      <simulation v-if="started"></simulation>
+      <hello v-else @start="started = true"></hello>
   </div>
 </template>
 

@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import 'animate.css/animate.css'
 
 Vue.use(Vuetify)
 
@@ -12,7 +11,7 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#avws-simulation',
   components: { App },
   template: '<App/>'
 })
